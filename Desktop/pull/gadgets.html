@@ -1,0 +1,466 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+             #pic{
+            width: 95%;
+
+        }
+        #text{
+            width: 90%;
+            margin: auto;
+            border-bottom:1px solid gray;
+            color: gray;
+        }
+        #filter{
+            width: 25%;
+            height: 1000px;
+            /* border: 1px solid red; */
+        }
+        #grid{
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-rows: auto;
+            gap: 10px;
+            /* border: 1px solid blue; */
+            text-align: center;
+            font-family: AvenirNext-Regular, Helvetica, Arial, sans-serif;;
+            font-weight: 100;
+            
+        }
+        #flex{
+         
+            width: 95%;
+            display: flex;
+            /* border: 1px solid red; */
+            padding: 10px;
+            box-sizing: border-box;
+           
+        }
+        #pricediv{
+            display: flex;
+            justify-content: space-evenly;
+            color: gray;
+            font-family: AvenirNext-Regular, Helvetica, Arial, sans-serif;;
+            margin-top: -20px;
+        }
+        #img{
+            width: 100%;
+            height: 250px;
+        }
+        #maindiv{
+            /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+            */
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+            width: auto;
+            /* height: 400px; */
+            line-height: 20px;
+            padding: 10px;
+        }
+        #strike{
+            text-decoration: line-through;
+        }
+        #filter{
+            /* line-height: 50px; */
+            text-align: center;
+            color: rgb(80, 78, 78);
+            
+        }
+        #sortNames, #sortprice,#filtercat{
+            width: 200px;
+            height: 30px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            
+            /* align-items: center; */
+            /* margin: auto; */
+        }
+        #filter > select{
+            color: rgb(80, 78, 78);
+            border-radius: 10px;
+
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+
+
+    </div>
+
+    <div id="pic">
+
+        <img src="https://shopdisney.in/media/March/2022/banner/d_Gadgets.jpg" alt="">
+    </div>
+
+    <div id="text">
+        <p>ShopDisney /  Fashion & Accessories</p>
+    </div>
+
+    <div id="flex">
+        <div id="filter">
+            <h3>Filter by:</h3>
+            <select id="sortNames" onchange="handleNameSort()">
+                <option value="">Sort By Names</option>
+                <option value="ascending">Ascending</option>
+                <option value="descending">Descending</option>
+              </select>
+
+              <br>
+            <select name="Sort by price" id="sortprice" onchange="handlePriceSort()">
+                <option value="">Sort By Price</option>
+                <option value="htl">High To Low</option>
+                <option value="lth">Low To High</option>
+            </select>
+
+            <select id="filtercat" onchange="handleCatSort()">
+                <option value="">Filter by catagery</option>
+                <option value="Mouse Pad">Mouse Pad</option>
+                <option value="Watch">Watch</option>
+                <option value="Bluetooth">Bluetooth</option>
+              </select>
+        </div>
+        <div id="grid">
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+cartdata = []
+
+gadgetsdata =[
+    {
+        Image:"https://shopdisney.in/media/catalog/product/8/9/8904130882623_1_.png?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Iron Man Storm Smartwatch Multicolor",
+        Strikeoffprice :5990 ,
+        Price:  3799,
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/8/9/8904130882630_1_.png?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Black Panther Storm Smartwatch Multicolor",
+        Strikeoffprice :5900 ,
+        Price: 3799 ,
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/8/9/8904130882616_1_.png",
+        Name: "Marvel Captain America Storm Smartwatch Multicolor",
+        Strikeoffprice :5900 ,
+        Price: 3799 ,
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/8/9/8904130882630_1_.png?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Black Panther Storm Smartwatch Multicolor",
+        Strikeoffprice :5900 ,
+        Price:  3799, 
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/8/9/8904130881640_1_.png",
+        Name: "Marvel Iron Man Airdopes 131 TWS Earbuds For Unisex",
+        Strikeoffprice : 2900,
+        Price: 1499 ,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/8/9/8904130881633_1_.png",
+        Name: "Marvel Black Panther Airdopes 131 TWS Earbuds For Unisex",
+        Strikeoffprice :2990 ,
+        Price:1499  ,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/8/9/8904130881626_1_.png",
+        Name: "Marvel Captain America Airdopes 131 TWS Earbuds For Unisex",
+        Strikeoffprice :2999 ,
+        Price:  1299,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/8/9/8904130881596_1_.png",
+        Name: "Marvel Captain America Stone 190 bluetooth Speaker",
+        Strikeoffprice : 2990,
+        Price:  1499,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/8/9/8904130882616_1_.png?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Captain America Storm Smartwatch",
+        Strikeoffprice : 5900,
+        Price:  3799,
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/8/9/8904130882623_1_.png?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Iron Man Storm Smartwatch Multicolor",
+        Strikeo3799ffprice : 5900,
+        Price:  3799,
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/8/9/8904130882623_1_.png?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Iron Man Storm Smartwatch Multicolor",
+        Strikeoffprice :5990 ,
+        Price:  3799,
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/8/9/8904130882630_1_.png?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Black Panther Storm Smartwatch Multicolor",
+        Strikeoffprice :5900 ,
+        Price: 3799 ,
+        Catagery:"Watch"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/o/sodciblintegratedspiderlogo1.jpg",
+        Name: "Marvel Spider-Man Integrated Logo - Decibel Wireless On Ear Headphones Multicolor ",
+        Strikeoffprice :1900 ,
+        Price:  1600,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/o/sodciblmysticartsspidey1.jpg",
+        Name: "Marvel Spider-Man Mystic Arts - Decibel Wireless On Ear Headphones Multicolor For Unisex",
+        Strikeoffprice :1900 ,
+        Price:  1600,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/o/sodciblstrangeparkeralliance1.jpg",
+        Name: "Marvel Spider-Man Black and Gold - Decibel Wireless On Ear Headphones Multicolor For Unisex",
+        Strikeoffprice : 1900,
+        Price:  1600,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/o/sodciblstrangetotherescue1.jpg",
+        Name: "Marvel Spider-Man Strange to the rescue - Decibel Wireless On Ear Headphones Multicolor ",
+        Strikeoffprice : 1900,
+        Price:  1600,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/o/sodcibltwofacespidey1.jpg",
+        Name: "Marvel Spider-Man Two Face - Decibel Wireless On Ear Headphones Multicolor For Unisex",
+        Strikeoffprice : 1900,
+        Price:  1600,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/o/sodciblwebshootingspidey1.jpg",
+        Name: "Marvel Spider-Man Web Shooting - Decibel Wireless On Ear Headphones Multicolor ",
+        Strikeoffprice :1900 ,
+        Price:  1600,
+        Catagery:"Bluetooth"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdstrangeparkeralliance1.jpg",
+        Name: "Marvel Spider-Man Strange Parker Alliance - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdspidermanengage1.jpg",
+        Name: "Marvel Spider-ManEngage - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdshattereddimensionspidey1.jpg",
+        Name: "Marvel Spider-Man Shattered Dimension - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdpublicenemyspidey1.jpg",
+        Name: "Marvel Spider-Man Public Enemy - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdpeterparkergrunge1.jpg",
+        Name: "Marvel Spider-Man Peter Parker Grunge - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdpeterblackandgold1.jpg",
+        Name: "Marvel Spider-Man Peter Black and Gold - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdnowayhomespidey1.jpg",
+        Name: "Marvel Spider-Man No Way Home - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdnewspidertech1.jpg",
+        Name: "Marvel Spider-Man New Tech - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdneighborhoodspidey1.jpg",
+        Name: "Marvel Spider-Man Neighborhood - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdmysticartsspidey1.jpg",
+        Name: "Marvel Spider-Man Mystic Arts - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdintegratedspiderlogo1.jpg",
+        Name: "Marvel Spider-Man Integrated Logo - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdextraordinaryspiderman1.jpg",
+        Name: "Marvel Spider-Man Extraordinary man - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/m/c/mcdmopdall3spidey1.jpg",
+        Name: "Marvel Spider-Man All 3 - Mouse Pad Multicolor For Unisex",
+        Strikeoffprice : 499,
+        Price:  399,
+        Catagery:"Mouse Pad"
+    },
+   
+
+]
+
+displayData(gadgetsdata)
+function handlePriceSort(){
+    console.log("YES")
+    var sort= document.querySelector("#sortprice").value
+    
+    if(sort == "htl"){
+        gadgetsdata.sort(function (a, b) {
+        return b.Price - a.Price;
+    });
+        displayData(gadgetsdata);
+    }
+
+    if(sort == "lth"){
+        gadgetsdata.sort(function (a, b) {
+        return a.Price - b.Price;
+    });
+        displayData(gadgetsdata);
+    }
+}
+
+function handleNameSort(){
+  // console.log("Yes")
+  var sort = document.querySelector("#sortNames").value
+  // console.log(sort)
+  if(sort == "ascending"){
+    gadgetsdata.sort(function (a,b){
+      if(a.Name > b.Name) return 1
+      if(a.Name< b.Name ) return -1
+      return 0
+    })
+    console.log("Yes")
+    displayData(gadgetsdata)
+  }
+
+  if(sort == "descending"){
+    gadgetsdata.sort(function (a,b){
+      if(a.Name > b.Name) return -1
+      if(a.Name < b.Name ) return 1
+      return 0
+    })
+    console.log("NOO")
+    displayData(gadgetsdata)
+  }
+}
+function handleCatSort(){
+  var sort = document.querySelector("#filtercat").value;
+
+  var sortlist = gadgetsdata.filter(function (elem){
+      return elem.Catagery == sort;
+  })
+  console.log("Sorted")
+  displayData(sortlist)
+}
+  
+    function displayData(gadgetsdata){
+        document.querySelector("#grid").innerHTML=""
+        gadgetsdata.map(function (elem){
+            
+        var maindiv = document.createElement("div")
+        maindiv.setAttribute("id","maindiv")
+        var div1 = document.createElement("div")
+
+        var image = document.createElement("img")
+        image.src=elem.Image
+        image.setAttribute("id","img")
+
+        var name = document.createElement("p")
+        name.innerText=elem.Name
+
+        div1.append(image,name)
+
+        var pricediv = document.createElement("div")
+        pricediv.setAttribute("id", "pricediv")
+
+        var strprice = document.createElement("p")
+        strprice.innerText = "₹"+" " +elem.Strikeoffprice
+        strprice.setAttribute("id","strike")
+
+        var price = document.createElement("P")
+        price.innerText ="₹"+" " +elem.Price
+
+        var cart = document.createElement("button")
+        cart.innerText="Add to cart"
+        cart.addEventListener("click", function(){
+            cartfun(elem)
+      })
+       
+        pricediv.append(strprice,price)
+        maindiv.append(div1,pricediv,cart)
+        document.querySelector("#grid").append(maindiv)
+        
+    })
+    }
+
+
+
+
+    function cartfun(elem){
+        cartdata.push(elem)
+        localStorage.setItem("cart",JSON.stringify(cartdata));
+        alert("Item added to cart")
+        console.log(cartdata)
+    }
+</script>

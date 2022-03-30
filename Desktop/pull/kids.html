@@ -1,0 +1,343 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #pic{
+            width: 95%;
+
+        }
+        #text{
+            width: 90%;
+            margin: auto;
+            border-bottom:1px solid gray;
+            color: gray;
+        }
+        #filter{
+            width: 25%;
+            height: 1000px;
+            /* border: 1px solid red; */
+        }
+        #grid{
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-rows: auto;
+            gap: 10px;
+            /* border: 1px solid blue; */
+            text-align: center;
+            font-family: AvenirNext-Regular, Helvetica, Arial, sans-serif;;
+            font-weight: 100;
+            
+        }
+        #flex{
+         
+            width: 95%;
+            display: flex;
+            /* border: 1px solid red; */
+            padding: 10px;
+            box-sizing: border-box;
+           
+        }
+        #pricediv{
+            display: flex;
+            justify-content: space-evenly;
+            color: gray;
+            font-family: AvenirNext-Regular, Helvetica, Arial, sans-serif;;
+            margin-top: -20px;
+        }
+        #img{
+            width: 100%;
+        }
+        #maindiv{
+            /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+            */
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+            width: auto;
+            /* height: 400px; */
+            line-height: 20px;
+            padding: 10px;
+        }
+        #strike{
+            text-decoration: line-through;
+        }
+        #filter{
+            /* line-height: 50px; */
+            text-align: center;
+            color: rgb(80, 78, 78);
+            
+        }
+        #sortNames, #sortprice,#filtercat{
+            width: 200px;
+            height: 30px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            
+            /* align-items: center; */
+            /* margin: auto; */
+        }
+        #filter > select{
+            color: rgb(80, 78, 78);
+            border-radius: 10px;
+
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+
+
+
+    </div>
+
+    <div id="pic">
+
+        <img src="https://shopdisney.in/media/March/2022/banner/d_Fashion-Accessories.jpg" alt="">
+    </div>
+
+    <div id="text">
+        <p>ShopDisney /  Fashion & Accessories</p>
+    </div>
+
+    <div id="flex">
+        <div id="filter">
+            <h3>Filter by:</h3>
+            <select id="sortNames" onchange="handleNameSort()">
+                <option value="">Sort By Names</option>
+                <option value="ascending">Ascending</option>
+                <option value="descending">Descending</option>
+              </select>
+
+              <br>
+            <select name="Sort by price" id="sortprice" onchange="handlePriceSort()">
+                <option value="">Sort By Price</option>
+                <option value="htl">High To Low</option>
+                <option value="lth">Low To High</option>
+            </select>
+
+            <select id="filtercat" onchange="handleCatSort()">
+                <option value="">Filter by catagery</option>
+                <option value="T-shirt">T-shirt</option>
+                <option value="Shoes">Foot Wear</option>
+                <option value="Bag">Bag</option>
+              </select>
+        </div>
+        <div id="grid">
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+cartdata = []
+
+kidsdata=[
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001917_1_3.jpg",
+        Name: "Marvel Spider-Man Blue Sweatshirt",
+        Strikeoffprice : 2099.00,
+        Price: 840.00,
+        Catagery:"T-shirt"
+    },
+
+   
+
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001766_1_2.jpg"   , 
+        Name: "Marvel Spider-Man Grey Sweatshirt",
+        Strikeoffprice : 2199.00,
+        Price:880.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001735_1_2.jpg"   , 
+        Name: "Marvel Spider-Man No Way Home Tshirt",
+        Strikeoffprice : 699.00,
+        Price:594.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001762_1_2.jpg"   , 
+        Name: "Marvel Spider-Man Black Sweatshirt",
+        Strikeoffprice : 2199.00,
+        Price:880.00,
+        Catagery:"T-shirt"
+    },
+    
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001739_1_2.jpg"   , 
+        Name: "Marvel Spider-Man No Way Home Tshirt",
+        Strikeoffprice : 799.00,
+        Price:679.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001734_1_2.jpg"   , 
+        Name: "Marvel Spider-Man No Way Home White Tshirt",
+        Strikeoffprice : 599.00,
+        Price:509.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001738_1_2.jpg"   , 
+        Name: "Marvel Spider-Man No Way Home Black Tshir",
+        Strikeoffprice : 699.00,
+        Price:594.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001731_1_2.jpg"   , 
+        Name: "Marvel Spider-Man No Way Home Red Tshirt",
+        Strikeoffprice : 699.00,
+        Price:594.00,
+        Catagery:"T-shirt"
+    },
+
+    
+  
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001770_1_2.jpg"   , 
+        Name: "Marvel Spider-Man Grey Hoodie",
+        Strikeoffprice : 2299.00,
+        Price:805.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001760_1_2.jpg"   , 
+        Name: "Marvel Spider-Man Red Tshirt",
+        Strikeoffprice : 1299.00,
+        Price:520.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image: "https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-20-21-004632_1_2.jpg"   , 
+        Name: "Marvel Spider-Man Red Tshirt",
+        Strikeoffprice : 1099.00,
+        Price:479.00,
+        Catagery:"T-shirt"
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/s/t/sty-21-22-001917_1_3.jpg",
+        Name: "Marvel Spider-Man Blue Sweatshirt",
+        Strikeoffprice : 2099.00,
+        Price: 840.00,
+        Catagery:"T-shirt"
+    },
+ 
+
+
+    ]
+
+    displayData(kidsdata)
+function handlePriceSort(){
+    console.log("YES")
+    var sort= document.querySelector("#sortprice").value
+    
+    if(sort == "htl"){
+        kidsdata.sort(function (a, b) {
+        return b.Price - a.Price;
+    });
+        displayData(kidsdata);
+    }
+
+    if(sort == "lth"){
+        kidsdata.sort(function (a, b) {
+        return a.Price - b.Price;
+    });
+        displayData(kidsdata);
+    }
+}
+
+function handleNameSort(){
+  // console.log("Yes")
+  var sort = document.querySelector("#sortNames").value
+  // console.log(sort)
+  if(sort == "ascending"){
+    kidsdata.sort(function (a,b){
+      if(a.Name > b.Name) return 1
+      if(a.Name< b.Name ) return -1
+      return 0
+    })
+    console.log("Yes")
+    displayData(kidsdata)
+  }
+
+  if(sort == "descending"){
+    kidsdata.sort(function (a,b){
+      if(a.Name > b.Name) return -1
+      if(a.Name < b.Name ) return 1
+      return 0
+    })
+    console.log("NOO")
+    displayData(kidsdata)
+  }
+}
+
+function handleCatSort(){
+  var sort = document.querySelector("#filtercat").value;
+
+  var sortlist = mensdata.filter(function (elem){
+      return elem.Catagery == sort;
+  })
+  console.log("Sorted")
+  displayData(sortlist)
+}
+  
+    function displayData(kidsdata){
+        document.querySelector("#grid").innerHTML=""
+        kidsdata.map(function (elem){
+            
+        var maindiv = document.createElement("div")
+        maindiv.setAttribute("id","maindiv")
+        var div1 = document.createElement("div")
+
+        var image = document.createElement("img")
+        image.src=elem.Image
+        image.setAttribute("id","img")
+
+        var name = document.createElement("p")
+        name.innerText=elem.Name
+
+        div1.append(image,name)
+
+        var pricediv = document.createElement("div")
+        pricediv.setAttribute("id", "pricediv")
+
+        var strprice = document.createElement("p")
+        strprice.innerText = "₹"+" " +elem.Strikeoffprice
+        strprice.setAttribute("id","strike")
+
+        var price = document.createElement("P")
+        price.innerText ="₹"+" " +elem.Price
+
+        var cart = document.createElement("button")
+        cart.innerText="Add to cart"
+        cart.addEventListener("click", function(){
+            cartfun(elem)
+      })
+       
+        pricediv.append(strprice,price)
+        maindiv.append(div1,pricediv,cart)
+        document.querySelector("#grid").append(maindiv)
+        
+    })
+    }
+
+
+
+
+    function cartfun(elem){
+        cartdata.push(elem)
+        localStorage.setItem("cart",JSON.stringify(cartdata));
+        alert("Item added to cart")
+        console.log(cartdata)
+    }
+
+</script>

@@ -1,0 +1,433 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+             #pic{
+            width: 95%;
+
+        }
+        #text{
+            width: 90%;
+            margin: auto;
+            border-bottom:1px solid gray;
+            color: gray;
+        }
+        #filter{
+            width: 25%;
+            height: 1000px;
+            /* border: 1px solid red; */
+        }
+        #grid{
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-rows: auto;
+            gap: 10px;
+            /* border: 1px solid blue; */
+            text-align: center;
+            font-family: AvenirNext-Regular, Helvetica, Arial, sans-serif;;
+            font-weight: 100;
+            
+        }
+        #flex{
+         
+            width: 95%;
+            display: flex;
+            /* border: 1px solid red; */
+            padding: 10px;
+            box-sizing: border-box;
+           
+        }
+        #pricediv{
+            display: flex;
+            justify-content: space-evenly;
+            color: gray;
+            font-family: AvenirNext-Regular, Helvetica, Arial, sans-serif;;
+            margin-top: -20px;
+        }
+        #img{
+            width: 100%;
+            height: 250px;
+        }
+        #maindiv{
+            /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+            */
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+            width: auto;
+            /* height: 400px; */
+            line-height: 20px;
+            padding: 10px;
+        }
+        #strike{
+            text-decoration: line-through;
+        }
+        #filter{
+            /* line-height: 50px; */
+            text-align: center;
+            color: rgb(80, 78, 78);
+            
+        }
+        #sortNames, #sortprice,#filtercat{
+            width: 200px;
+            height: 30px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            
+            /* align-items: center; */
+            /* margin: auto; */
+        }
+        #filter > select{
+            color: rgb(80, 78, 78);
+            border-radius: 10px;
+
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+
+
+    </div>
+
+    <div id="pic">
+
+        <img src="https://shopdisney.in/media/March/2022/banner/d_Toys.jpg" alt="">
+    </div>
+
+    <div id="text">
+        <p>ShopDisney /  Fashion & Accessories</p>
+    </div>
+
+    <div id="flex">
+        <div id="filter">
+            <h3>Filter by:</h3>
+            <select id="sortNames" onchange="handleNameSort()">
+                <option value="">Sort By Names</option>
+                <option value="ascending">Ascending</option>
+                <option value="descending">Descending</option>
+              </select>
+
+              <br>
+            <select name="Sort by price" id="sortprice" onchange="handlePriceSort()">
+                <option value="">Sort By Price</option>
+                <option value="htl">High To Low</option>
+                <option value="lth">Low To High</option>
+            </select>
+
+            <!-- <select id="filtercat" onchange="handleCatSort()">
+                <option value="">Filter by catagery</option>
+                <option value="clothes">Clothes</option>
+                <option value="Shoes">Foot Wear</option>
+                <option value="Bag">Bag</option>
+              </select> -->
+        </div>
+        <div id="grid">
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+cartdata = []
+
+toysdata =[
+    {
+        Image:"https://shopdisney.in/media/catalog/product/9/0/903671140103-1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Avengers Endgame Hulk (Deluxe Version)",
+        Strikeoffprice : 20000 ,
+        Price:  19699,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/l/b/lbdp50009.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Disney Frozen MDF Kristoff and Sven with Base",
+        Strikeoffprice :999  ,
+        Price:  499,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/d/m/dmzcb_7_1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Avengers Domez Collection Combo Pack of 3",
+        Strikeoffprice : 2000 ,
+        Price:  1497,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/f/u/fu39209_-_molten_man.1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Spiderman Far From Home Molten Man 4 Inch",
+        Strikeoffprice :  999,
+        Price:  499,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/s/p/sportscombopack_1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Spiderman 4 in 1 Mega Sports Combo ",
+        Strikeoffprice :1999  ,
+        Price:  1499,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/f/u/fu36342.1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel: Captain Marvel - Vers 4 Inch Pop By Funko",
+        Strikeoffprice : 1499 ,
+        Price:  1099,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/p/u/puzlecbmarvelcomicscollection1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Marvel Comics Collection - Cardboard",
+        Strikeoffprice : 1499 ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/f/u/fu39211.1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Spiderman Far From Home Hydroman 4 Inch ",
+        Strikeoffprice : 999 ,
+        Price:  599,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/f/u/fu36352.1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel: Captain Marvel - Yon-Rogg 4 Inch Pop",
+        Strikeoffprice :  1499,
+        Price:  1099,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/9/1/9106700350832-1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Spiderman Far From Home: Mysterio 1/10th",
+        Strikeoffprice : 29999 ,
+        Price:  20499,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/f/r/frozen2tent_2.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Disney Frozen 2 Playhouse Tent Multicolor",
+        Strikeoffprice :  1499,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/1/5/15801821140186-1.jpg?width=300&height=&canvas=300,&quality=80&bg-color=255,255,255&fit=bounds",
+        Name: "Marvel Comics - Deadpool 1:10th Scale Deluxe Statue",
+        Strikeoffprice : 25999 ,
+        Price:  23799,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlemgmanvsmachine1.jpg",
+        Name: "Marvel Man VS Machine Suit-Magnetic Puzzles",
+        Strikeoffprice : 1499 ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlemgcapamsuit1.jpg",
+        Name: "Marvel Cap I am Suit-Magnetic Puzzles",
+        Strikeoffprice :1499  ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbavengerarmycaptainmarvel1.jpg",
+        Name: "Marvel Avenger Army Captain Marvel - Cardboard Puzzles",
+        Strikeoffprice :1499  ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbmonstervsmachine1.jpg",
+        Name: "Marvel Monster vs Machine - Cardboard Puzzles",
+        Strikeoffprice :1499  ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbweareintheendgame1.jpg",
+        Name: "Marvel We are in the Endgame - Cardboard Puzzles",
+        Strikeoffprice : 1499 ,
+        Price: 999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbmarklxxxv1.jpg",
+        Name: "Marvel Mark LXXXV - Cardboard Puzzles",
+        Strikeoffprice : 1499 ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbfierythanos1.jpg",
+        Name: "Marvel Fiery Thanos - Cardboard Puzzles",
+        Strikeoffprice : 1499 ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbteamgoals1.jpg",
+        Name: "Marvel Team Goals - Cardboard Puzzles",
+        Strikeoffprice :1499  ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbtearmeup1.jpg",
+        Name: "Disney Tear me up - Cardboard Puzzles",
+        Strikeoffprice :  1499,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbstarwarsensemble1.jpg",
+        Name: "Star Wars Starwars Ensemble - Cardboard Puzzles",
+        Strikeoffprice :  1499,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbsithtroopers1.jpg",
+        Name: "Star Wars Sith Troopers - Cardboard Puzzles",
+        Strikeoffprice :1499  ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlecbfrozentogether1.jpg",
+        Name: "Disney Frozen together - Cardboard Puzzles",
+        Strikeoffprice :1499  ,
+        Price:  999,
+        // Catagery:""
+    },
+    {
+        Image:"https://shopdisney.in/media/catalog/product/cache/653b84d7c049b572e5becd44f2ff8080/p/u/puzlemgcapamsuit1.jpg",
+        Name: "Marvel Cap Am Suit - Magnetic Puzzles",
+        Strikeoffprice : 1499 ,
+        Price:  1199,
+        // Catagery:""
+    },
+   
+
+
+
+
+
+
+
+
+
+]
+
+displayData(toysdata)
+function handlePriceSort(){
+    console.log("YES")
+    var sort= document.querySelector("#sortprice").value
+    
+    if(sort == "htl"){
+        toysdata.sort(function (a, b) {
+        return b.Price - a.Price;
+    });
+        displayData(toysdata);
+    }
+
+    if(sort == "lth"){
+        toysdata.sort(function (a, b) {
+        return a.Price - b.Price;
+    });
+        displayData(toysdata);
+    }
+}
+
+function handleNameSort(){
+  // console.log("Yes")
+  var sort = document.querySelector("#sortNames").value
+  // console.log(sort)
+  if(sort == "ascending"){
+    toysdata.sort(function (a,b){
+      if(a.Name > b.Name) return 1
+      if(a.Name< b.Name ) return -1
+      return 0
+    })
+    console.log("Yes")
+    displayData(toysdata)
+  }
+
+  if(sort == "descending"){
+    toysdata.sort(function (a,b){
+      if(a.Name > b.Name) return -1
+      if(a.Name < b.Name ) return 1
+      return 0
+    })
+    console.log("NOO")
+    displayData(toysdata)
+  }
+}
+
+// function handleCatSort(){
+//   var sort = document.querySelector("#filtercat").value
+
+//   if(sort == "T-shirt"){
+//      var Tshirt = toysdata.catagery == "T-shirt"
+//     displayData(toysdata.catagery == Tshirt)
+//     console.log("Bag")
+//   }
+// }
+  
+    function displayData(toysdata){
+        document.querySelector("#grid").innerHTML=""
+        toysdata.map(function (elem){
+            
+        var maindiv = document.createElement("div")
+        maindiv.setAttribute("id","maindiv")
+        var div1 = document.createElement("div")
+
+        var image = document.createElement("img")
+        image.src=elem.Image
+        image.setAttribute("id","img")
+
+        var name = document.createElement("p")
+        name.innerText=elem.Name
+
+        div1.append(image,name)
+
+        var pricediv = document.createElement("div")
+        pricediv.setAttribute("id", "pricediv")
+
+        var strprice = document.createElement("p")
+        strprice.innerText = "₹"+" " +elem.Strikeoffprice
+        strprice.setAttribute("id","strike")
+
+        var price = document.createElement("P")
+        price.innerText ="₹"+" " +elem.Price
+
+        var cart = document.createElement("button")
+        cart.innerText="Add to cart"
+        cart.addEventListener("click", function(){
+            cartfun(elem)
+      })
+       
+        pricediv.append(strprice,price)
+        maindiv.append(div1,pricediv,cart)
+        document.querySelector("#grid").append(maindiv)
+        
+    })
+    }
+
+
+
+
+    function cartfun(elem){
+        cartdata.push(elem)
+        localStorage.setItem("cart",JSON.stringify(cartdata));
+        alert("Item added to cart")
+        console.log(cartdata)
+    }
+</script>
